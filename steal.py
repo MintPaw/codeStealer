@@ -1,15 +1,29 @@
-def main():
+def main(argv):
+    import getopt
+    url = ""
+
     try:
-        import Image
-    except ImportError:
-        from PIL import Image
+        opts, args = getopt.getopt(argv, "", ["url="])
+    except getopt.GetoptError:
+        print("Run with --url=http://mysite.com/myImage.png")
+        sys.exit(2)
+
+    for opt, arg in opts:
+        if opt == "--url":
+            url = arg
+
+    import PIL
+    from PIL import Image
+    from PIL import ImageOps
 
     import pytesseract
 
     import urllib.request
-    urllib.request.urlretrieve("https://i.imgur.com/GqvByp6.png", "local.png")
+    urllib.request.urlretrieve(url, "local.png")
 
-    img = Image.open('local.png')
+    img = Image.open("local.png")
+    img = ImageOps.grayscale(img)
+    img = img.resize((img.width * 2, img.height * 2))
     text = pytesseract.image_to_string(
         img,
         None,
@@ -25,22 +39,18 @@ def main():
         "-c tessedit_char_whitelist=0123456789-abcdefghijklmnopqrstuvqxyz")
 
     chunks = text.split()
-    steamChunks = list()
-    originChunks = list()
+    validChunks = list()
 
     for c in chunks:
         if c.count("-") == 2:
-            steamChunks.append(c)
+            validChunks.append(c)
         if c.count("-") == 4:
-            originChunks.append(c)
+            validChunks.append(c)
 
-    print("Possible Steam Keys:")
-    for c in steamChunks:
-        print(c)
-
-    print("Possible Origin Keys:")
-    for c in originChunks:
+    print("Possible keys:")
+    for c in validChunks:
         print(c)
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(sys.argv[1:])
