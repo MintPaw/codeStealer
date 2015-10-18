@@ -2,7 +2,7 @@
 A Steam/Origin key stealing program using tesseract
 Usage is simple, run "python3 steal.py --url myImage"
 An example being:
-python3 steal.py --url https://i.imgur.com/GqvByp6.png
+python3 steal.py --url=https://i.imgur.com/GqvByp6.png
 
 Is it perfect? No, inf act it only work about 20% of the time in my testing.
 
