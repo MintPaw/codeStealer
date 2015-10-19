@@ -11,3 +11,7 @@ There are numerous sources explaining how to train and improve tesseract image r
 With a little bit of time and font traning with example keys (http://pastebin.com/1PhUrUXN and http://pastebin.com/zJzCuC8C) it could be perfect.
 
 Don't post text keys in images, captcha-ify them.
+
+Depends on Pillow(often called PIL), tesseract(often called tesseract-orc) and, pytesseract.
+
+Example: https://i.imgur.com/4Ayfay2.png
